@@ -58,7 +58,25 @@ public class StudentDAOImpl implements StudentDAO {
             return false;
         }
     }
-
+ @Override
+    public StudentDTO insertStudent(StudentDTO student) {
+        try (PreparedStatement stmt = connection.prepareStatement("INSERT INTO Student (studentNumber, gpa, name) VALUES (?, ?, ?)", Statement.RETURN_GENERATED_KEYS)) {
+            stmt.setInt(1, student.getStudentNumber());
+            stmt.setFloat(2, student.getGpa());
+            stmt.setString(3, student.getName());
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected == 1) {
+                ResultSet rs = stmt.getGeneratedKeys();
+                if (rs.next()) {
+                    student.setId(rs.getInt(1));
+                }
+                return student;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 
 
