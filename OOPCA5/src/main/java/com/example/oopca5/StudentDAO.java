@@ -5,5 +5,6 @@ public interface StudentDAO {
     StudentDTO getStudentById(int id);
     boolean deleteStudentById(int id);
     StudentDTO insertStudent(StudentDTO student);
+    StudentDTO updateStudentById(int id, StudentDTO updatedStudent);
 
 }
