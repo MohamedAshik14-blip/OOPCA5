@@ -47,6 +47,17 @@ public class StudentDAOImpl implements StudentDAO {
         return student;
     }
 
+@Override
+    public boolean deleteStudentById(int id) {
+        try (PreparedStatement stmt = connection.prepareStatement("DELETE FROM Student WHERE id = ?")) {
+            stmt.setInt(1, id);
+            int rowsAffected = stmt.executeUpdate();
+            return rowsAffected > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
 
 
