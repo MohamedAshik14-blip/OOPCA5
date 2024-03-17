@@ -77,7 +77,23 @@ public class StudentDAOImpl implements StudentDAO {
         }
         return null;
     }
-
+ @Override
+    public StudentDTO updateStudentById(int id, StudentDTO updatedStudent) {
+        try (PreparedStatement stmt = connection.prepareStatement("UPDATE Student SET studentNumber = ?, gpa = ?, name = ? WHERE id = ?")) {
+            stmt.setInt(1, updatedStudent.getStudentNumber());
+            stmt.setFloat(2, updatedStudent.getGpa());
+            stmt.setString(3, updatedStudent.getName());
+            stmt.setInt(4, id);
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected == 1) {
+                updatedStudent.setId(id);
+                return updatedStudent;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 
 }
