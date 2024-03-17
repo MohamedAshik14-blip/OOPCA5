@@ -17,7 +17,8 @@ public class Main {
                 System.out.println("2. Find student by ID");
                  System.out.println("3. Delete student by ID");
                 System.out.println("4. Insert a new student");
-                System.out.println("5. Exit");
+                System.out.println("5. update Student By Id");
+                System.out.println("6. Exit");
                 System.out.print("Enter your choice: ");
 
                 int choice = scanner.nextInt();
@@ -74,7 +75,28 @@ public class Main {
                             System.out.println("Failed to insert new student.");
                         }
                         break;
-                    case 5:
+                        case 5:
+                        System.out.print("Enter student ID to update: ");
+                        int idToUpdate = scanner.nextInt();
+                        scanner.nextLine();
+                        System.out.print("Enter new student number: ");
+                        int newStudentNumber = scanner.nextInt();
+                        scanner.nextLine();
+                        System.out.print("Enter new GPA: ");
+                        float newGpa = scanner.nextFloat();
+                        scanner.nextLine();
+                        System.out.print("Enter new student name: ");
+                        String newName = scanner.nextLine();
+                        StudentDTO updatedStudent = new StudentDTO(idToUpdate, newStudentNumber, newGpa, newName);
+                        StudentDTO updatedStudentResult = studentDAO.updateStudentById(idToUpdate, updatedStudent);
+                        if (updatedStudentResult != null) {
+                            System.out.println("Student with ID " + idToUpdate + " updated successfully.");
+                        } else {
+                            System.out.println("Failed to update student with ID " + idToUpdate);
+                        }
+                        break;
+
+                    case 6:
 
                         System.out.println("Exiting...");
                         return;
