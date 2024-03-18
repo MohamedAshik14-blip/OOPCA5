@@ -94,6 +94,24 @@ public class StudentDAOImpl implements StudentDAO {
         }
         return null;
     }
-
+ @Override
+    public List<StudentDTO> findStudentsUsingFilter(float gpaThreshold) {
+        List<StudentDTO> filteredStudents = new ArrayList<>();
+        try (PreparedStatement stmt = connection.prepareStatement("SELECT * FROM Student WHERE gpa >= ?")) {
+            stmt.setFloat(1, gpaThreshold);
+            ResultSet rs = stmt.executeQuery();
+            while (rs.next()) {
+                StudentDTO student = new StudentDTO();
+                student.setId(rs.getInt("id"));
+                student.setStudentNumber(rs.getInt("studentNumber"));
+                student.setGpa(rs.getFloat("gpa"));
+                student.setName(rs.getString("name"));
+                filteredStudents.add(student);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return filteredStudents;
+    }
 
 }
