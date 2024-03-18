@@ -18,7 +18,8 @@ public class Main {
                  System.out.println("3. Delete student by ID");
                 System.out.println("4. Insert a new student");
                 System.out.println("5. update Student By Id");
-                System.out.println("6. Exit");
+                 System.out.println("6. Filter by Gpa  ");
+                System.out.println("7. Exit");
                 System.out.print("Enter your choice: ");
 
                 int choice = scanner.nextInt();
@@ -96,7 +97,24 @@ public class Main {
                         }
                         break;
 
-                    case 6:
+                           case 6:
+
+                        System.out.print("Enter GPA threshold: ");
+                        float gpaThreshold = scanner.nextFloat();
+                        scanner.nextLine(); 
+                        List<StudentDTO> filteredStudents = studentDAO.findStudentsUsingFilter(gpaThreshold);
+                        if (!filteredStudents.isEmpty()) {
+                            System.out.println("Students with GPA >= " + gpaThreshold + ":");
+                            for (StudentDTO student : filteredStudents) {
+                                System.out.println(student);
+                            }
+                        } else {
+                            System.out.println("No students found matching the filter.");
+                        }
+                        break;
+
+
+                    case 7:
 
                         System.out.println("Exiting...");
                         return;
