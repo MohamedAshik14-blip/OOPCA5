@@ -6,5 +6,6 @@ public interface StudentDAO {
     boolean deleteStudentById(int id);
     StudentDTO insertStudent(StudentDTO student);
     StudentDTO updateStudentById(int id, StudentDTO updatedStudent);
+List<StudentDTO> findStudentsUsingFilter(float gpaThreshold);
 
 }
