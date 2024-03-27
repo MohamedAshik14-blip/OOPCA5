@@ -42,3 +42,12 @@ public class StudentDAOImplTest {
         assertEquals(expectedStudent.getStudentNumber(), actualStudent.getStudentNumber());
         assertEquals(expectedStudent.getGpa(), actualStudent.getGpa());
     }
+
+    @Test
+    @DisplayName("Test createStudent method")
+    void testcreateStudent() {
+        StudentDTO newStudent = new StudentDTO(0, 123456, 3.5f, "Jane Smith");
+        StudentDTO insertedStudent = studentDAO.insertStudent(newStudent);
+        assertNotNull(insertedStudent);
+        assertNotEquals(0, insertedStudent.getId());
+    } 
