@@ -51,3 +51,16 @@ public class StudentDAOImplTest {
         assertNotNull(insertedStudent);
         assertNotEquals(0, insertedStudent.getId());
     } 
+    @Test
+    @DisplayName("Test updateStudentById method")
+    void testUpdateStudentById() {
+        int studentIdToUpdate = 25;
+        StudentDTO updatedStudent = new StudentDTO(studentIdToUpdate, 1234, 3.8f, "hello");
+        StudentDTO result = studentDAO.updateStudentById(studentIdToUpdate, updatedStudent);
+        assertNotNull(result);
+        assertEquals(updatedStudent.getStudentNumber(), result.getStudentNumber());
+        assertEquals(updatedStudent.getGpa(), result.getGpa());
+        assertEquals(updatedStudent.getName(), result.getName());
+    }
+
+}
