@@ -64,3 +64,12 @@ public class StudentDAOImplTest {
     }
 
 }
+@Test
+@DisplayName("Test deleteStudentById method")
+void testDeleteStudentById() {
+    int studentIdToDelete = 10;
+    boolean isDeleted = studentDAO.deleteStudentById(studentIdToDelete);
+    assertTrue(isDeleted);
+    // Check if the student is actually deleted
+    assertNull(studentDAO.getStudentById(studentIdToDelete));
+}
