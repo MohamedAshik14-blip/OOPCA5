@@ -73,3 +73,17 @@ void testDeleteStudentById() {
     // Check if the student is actually deleted
     assertNull(studentDAO.getStudentById(studentIdToDelete));
 }
+
+@Test
+@DisplayName("Test findStudentsUsingFilter method")
+void testFindStudentsUsingFilter() {
+    float gpaThreshold = 3.5f;
+    List<StudentDTO> filteredStudents = studentDAO.findStudentsUsingFilter(gpaThreshold);
+    assertNotNull(filteredStudents);
+    // Check if all filtered students have GPA >= gpaThreshold
+    for (StudentDTO student : filteredStudents) {
+        assertTrue(student.getGpa() >= gpaThreshold);
+    }
+    // Check if the filtered list is not empty
+    assertTrue(filteredStudents.size() > 0);
+}
