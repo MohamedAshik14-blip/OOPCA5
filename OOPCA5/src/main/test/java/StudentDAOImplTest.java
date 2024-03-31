@@ -100,3 +100,11 @@ void testListEntitiesToJson() {
     assertNotNull(studentsJson);
     // You may add more assertions here based on the expected JSON structure
 }
+@Test
+@DisplayName("Test JsonConverter.entityToJson method")
+void testEntityToJson() {
+    StudentDTO student = new StudentDTO(1, 101, 3.6f, "John Doe");
+    String studentJson = JsonConverter.entityToJson(student);
+    assertNotNull(studentJson);
+    // You may add more assertions here based on the expected JSON structure
+}
