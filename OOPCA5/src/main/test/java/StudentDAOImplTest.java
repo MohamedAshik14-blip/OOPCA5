@@ -87,3 +87,16 @@ void testFindStudentsUsingFilter() {
     // Check if the filtered list is not empty
     assertTrue(filteredStudents.size() > 0);
 }
+
+@Test
+@DisplayName("Test JsonConverter.listEntitiesToJson method")
+void testListEntitiesToJson() {
+    List<StudentDTO> students = new ArrayList<>();
+    students.add(new StudentDTO(1, 101, 3.6f, "John Doe"));
+    students.add(new StudentDTO(2, 102, 3.7f, "Jane Smith"));
+    students.add(new StudentDTO(3, 103, 3.8f, "Alice Johnson"));
+    
+    String studentsJson = JsonConverter.listEntitiesToJson(students);
+    assertNotNull(studentsJson);
+    // You may add more assertions here based on the expected JSON structure
+}
