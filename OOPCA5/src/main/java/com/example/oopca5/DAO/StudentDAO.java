@@ -1,3 +1,7 @@
+package DAO;
+
+import DTO.StudentDTO;
+
 import java.util.List;
 
 public interface StudentDAO {
