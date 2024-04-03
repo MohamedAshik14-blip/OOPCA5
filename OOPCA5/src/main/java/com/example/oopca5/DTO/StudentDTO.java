@@ -1,3 +1,4 @@
+package DTO;
 public class StudentDTO {
     private int id;
     private int studentNumber;
