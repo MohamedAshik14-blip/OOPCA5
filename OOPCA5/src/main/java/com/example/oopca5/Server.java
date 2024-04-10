@@ -67,7 +67,18 @@ public class Server {
                     String jsonStudents = JsonConverter.listEntitiesToJson(allStudents);
                     out.writeObject(jsonStudents);
                     out.flush();
-                }else {
+                }
+                    
+                    else if (requestType == -2) {
+                    String jsonEntity = (String) in.readObject();
+                    StudentDTO newStudent = JsonConverter.jsonToEntity(jsonEntity, StudentDTO.class);
+                    StudentDTO addedStudent = studentDAO.insertStudent(newStudent);
+                    String jsonResult = JsonConverter.entityToJson(addedStudent);
+                    out.writeObject(jsonResult);
+                    out.flush();
+                }
+                
+                else {
                     // Display Entity by ID
                     int studentId = requestType;
                     StudentDTO student = studentDAO.getStudentById(studentId);
