@@ -20,7 +20,8 @@ public class Client {
                 System.out.println("Menu:");
                 System.out.println("1. Display Entity by ID");
                 System.out.println("2. Display all Entities");
-               System.out.println("3. Exit");
+                System.out.println("3. Add an Entity");
+               System.out.println("4. Exit");
                 System.out.print("Enter your choice: ");
                 int choice = scanner.nextInt();
 
@@ -33,6 +34,9 @@ public class Client {
                         displayAllEntities(out, in);
                         break;
                     case 3:
+                        addEntity(out, in, scanner);
+                        break;
+                    case 4:
 
                         System.out.println("Exiting...");
                         return;
@@ -66,6 +70,23 @@ public class Client {
         String jsonData = (String) in.readObject();
         System.out.println("Received JSON data from server:");
         System.out.println(jsonData);
+    }
+
+    private static void addEntity(ObjectOutputStream out, ObjectInputStream in, Scanner scanner) throws IOException, ClassNotFoundException {
+        out.writeInt(-2);
+        out.flush();
+
+
+        System.out.println("Enter the entity data in JSON format:");
+        String jsonEntity = scanner.next();
+
+        out.writeObject(jsonEntity);
+        out.flush();
+
+
+        String response = (String) in.readObject();
+        System.out.println("Server response:");
+        System.out.println(response);
     }
 
   
