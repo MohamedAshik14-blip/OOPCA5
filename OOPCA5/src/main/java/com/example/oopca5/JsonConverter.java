@@ -15,4 +15,10 @@ public class JsonConverter {
     public static <T> String entityToJson(T entity) {
         return gson.toJson(entity);
     }
+    public static StudentDTO jsonToEntity(String json, Class<StudentDTO> entityClass) {
+        return gson.fromJson(json, entityClass);
+    }
+    public static String arrayToJson(String[] array) {
+        return gson.toJson(array);
+    }
 }
