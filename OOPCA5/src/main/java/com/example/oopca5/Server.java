@@ -77,7 +77,15 @@ public class Server {
                     out.writeObject(jsonResult);
                     out.flush();
                 }
-                
+
+                else if (requestType == -3) {
+
+                    int entityId = in.readInt();
+                    boolean isDeleted = studentDAO.deleteStudentById(entityId);
+                    out.writeBoolean(isDeleted);
+                    out.flush();
+                }  
+                        
                 else {
                     // Display Entity by ID
                     int studentId = requestType;
