@@ -21,7 +21,8 @@ public class Client {
                 System.out.println("1. Display Entity by ID");
                 System.out.println("2. Display all Entities");
                 System.out.println("3. Add an Entity");
-               System.out.println("4. Exit");
+                System.out.println("4. delete an Entity by ID");
+               System.out.println("5. Exit");
                 System.out.print("Enter your choice: ");
                 int choice = scanner.nextInt();
 
@@ -36,7 +37,10 @@ public class Client {
                     case 3:
                         addEntity(out, in, scanner);
                         break;
-                    case 4:
+                        case 4:
+                        deleteEntityById(out, in, scanner);
+                        break;
+                    case 5:
 
                         System.out.println("Exiting...");
                         return;
