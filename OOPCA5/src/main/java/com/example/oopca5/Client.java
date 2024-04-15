@@ -88,6 +88,21 @@ public class Client {
         System.out.println("Server response:");
         System.out.println(response);
     }
+    private static void deleteEntityById(ObjectOutputStream out, ObjectInputStream in, Scanner scanner) throws IOException {
+        out.writeInt(-3);
+        out.flush();
 
+        System.out.print("Enter the ID of the entity to delete: ");
+        int entityId = scanner.nextInt();
+        out.writeInt(entityId);
+        out.flush();
+
+        boolean isDeleted = in.readBoolean();
+        if (isDeleted) {
+            System.out.println("Entity with ID " + entityId + " has been successfully deleted.");
+        } else {
+            System.out.println("Failed to delete entity with ID " + entityId + ". Entity not found.");
+        }
+    }
   
 }
