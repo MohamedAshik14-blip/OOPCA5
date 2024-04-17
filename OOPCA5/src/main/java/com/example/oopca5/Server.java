@@ -85,6 +85,10 @@ public class Server {
                     out.writeBoolean(isDeleted);
                     out.flush();
                 }  
+                     else if (requestType == -4) {
+
+                    sendImagesList(out);
+                }
                         
                 else {
                     // Display Entity by ID
@@ -96,4 +100,18 @@ public class Server {
                 }
             }
         }
+        
     }
+     private static void sendImagesList(ObjectOutputStream out) throws IOException {
+        File imagesDirectory = new File("/Users/mohamedashiks/IdeaProjects/OOPCA5/src/main/java/images");
+        if (!imagesDirectory.exists() || !imagesDirectory.isDirectory()) {
+            out.writeObject("[]");
+            out.flush();
+        } else {
+            String[] imageFiles = imagesDirectory.list();
+            out.writeObject(JsonConverter.arrayToJson(imageFiles));
+            out.flush();
+        }
+    }
+
+}
