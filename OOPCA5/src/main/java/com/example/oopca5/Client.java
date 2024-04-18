@@ -40,7 +40,10 @@ public class Client {
                         case 4:
                         deleteEntityById(out, in, scanner);
                         break;
-                    case 5:
+                        case 5:
+                        getImagesList(out, in);
+                        break;
+                    case 6:
 
                         System.out.println("Exiting...");
                         return;
@@ -106,6 +109,37 @@ public class Client {
             System.out.println("Entity with ID " + entityId + " has been successfully deleted.");
         } else {
             System.out.println("Failed to delete entity with ID " + entityId + ". Entity not found.");
+        }
+    }
+    private static void getImagesList(ObjectOutputStream out, ObjectInputStream in) throws IOException, ClassNotFoundException {
+        out.writeInt(-4);
+        out.flush();
+
+
+        String jsonData = (String) in.readObject();
+        System.out.println("Received image file names from server:");
+        System.out.println(jsonData);
+
+        System.out.print("Enter the name of the image file to download: ");
+        Scanner scanner = new Scanner(System.in);
+        String fileName = scanner.nextLine();
+
+
+        out.writeInt(-5);
+        out.flush();
+        out.writeObject(fileName);
+        out.flush();
+
+
+        boolean fileExists = in.readBoolean();
+        if (fileExists) {
+            int fileSize = in.readInt();
+            byte[] fileData = new byte[fileSize];
+            in.readFully(fileData);
+            saveImageFile(fileName, fileData);
+            System.out.println("Image file '" + fileName + "' downloaded successfully.");
+        } else {
+            System.out.println("Image file '" + fileName + "' not found on the server.");
         }
     }
   
