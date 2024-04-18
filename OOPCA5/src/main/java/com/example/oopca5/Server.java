@@ -89,6 +89,11 @@ public class Server {
 
                     sendImagesList(out);
                 }
+                else if (requestType == -5) {
+
+                    String fileName = (String) in.readObject();
+                    sendImageFile(fileName, out);
+                }
                         
                 else {
                     // Display Entity by ID
