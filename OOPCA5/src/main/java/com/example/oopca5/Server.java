@@ -113,5 +113,18 @@ public class Server {
             out.flush();
         }
     }
+    private static void sendImageFile(String fileName, ObjectOutputStream out) throws IOException {
+        File file = new File("/Users/mohamedashiks/IdeaProjects/OOPCA5/src/main/java/images/" + fileName);
+        if (!file.exists() || file.isDirectory()) {
+            out.writeBoolean(false);
+            out.flush();
+            return;
+        }
 
+        byte[] fileData = Files.readAllBytes(file.toPath());
+        out.writeBoolean(true);
+        out.writeInt(fileData.length);
+        out.write(fileData);
+        out.flush();
+    }
 }
