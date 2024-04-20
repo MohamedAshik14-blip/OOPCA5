@@ -94,6 +94,12 @@ public class Server {
                     String fileName = (String) in.readObject();
                     sendImageFile(fileName, out);
                 }
+                     else if (requestType == -6) {
+
+                    System.out.println("Client is quitting...");
+                    return;
+                }
+
                         
                 else {
                     // Display Entity by ID
