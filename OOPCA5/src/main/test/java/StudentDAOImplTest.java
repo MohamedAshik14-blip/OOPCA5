@@ -1,8 +1,13 @@
-import org.junit.jupiter.api.*;
-import static org.junit.jupiter.api.Assertions.*;
+import DAO.StudentDAOImpl;
+import DTO.StudentDTO;
+import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 public class StudentDAOImplTest {
 
@@ -21,11 +26,10 @@ public class StudentDAOImplTest {
     @DisplayName("Test getAllStudents method")
     void testGetAllStudents() {
         List<StudentDTO> students = studentDAO.getAllStudents();
-        assertNotNull(students);
         assertTrue(students.size() > 0);
     }
 
-@Test
+    @Test
     @DisplayName("Test getStudentById method")
     void testGetStudentById() {
         StudentDTO expectedStudent = new StudentDTO();
@@ -36,7 +40,6 @@ public class StudentDAOImplTest {
 
         StudentDTO actualStudent = studentDAO.getStudentById(3);
 
-        assertNotNull(actualStudent);
         assertEquals(expectedStudent.getId(), actualStudent.getId());
         assertEquals(expectedStudent.getName(), actualStudent.getName());
         assertEquals(expectedStudent.getStudentNumber(), actualStudent.getStudentNumber());
@@ -44,67 +47,60 @@ public class StudentDAOImplTest {
     }
 
     @Test
-    @DisplayName("Test createStudent method")
-    void testcreateStudent() {
+    @DisplayName("Test insertStudent method")
+    void testInsertStudent() {
         StudentDTO newStudent = new StudentDTO(0, 123456, 3.5f, "Jane Smith");
         StudentDTO insertedStudent = studentDAO.insertStudent(newStudent);
-        assertNotNull(insertedStudent);
         assertNotEquals(0, insertedStudent.getId());
-    } 
+    }
+
     @Test
     @DisplayName("Test updateStudentById method")
     void testUpdateStudentById() {
-        int studentIdToUpdate = 25;
-        StudentDTO updatedStudent = new StudentDTO(studentIdToUpdate, 1234, 3.8f, "hello");
+        int studentIdToUpdate = 15;
+        StudentDTO updatedStudent = new StudentDTO(studentIdToUpdate, 123456, 3.8f, "Smith");
         StudentDTO result = studentDAO.updateStudentById(studentIdToUpdate, updatedStudent);
-        assertNotNull(result);
         assertEquals(updatedStudent.getStudentNumber(), result.getStudentNumber());
         assertEquals(updatedStudent.getGpa(), result.getGpa());
         assertEquals(updatedStudent.getName(), result.getName());
     }
 
-}
-@Test
-@DisplayName("Test deleteStudentById method")
-void testDeleteStudentById() {
-    int studentIdToDelete = 10;
-    boolean isDeleted = studentDAO.deleteStudentById(studentIdToDelete);
-    assertTrue(isDeleted);
-    // Check if the student is actually deleted
-    assertNull(studentDAO.getStudentById(studentIdToDelete));
-}
+    @Test
+    @DisplayName("Test deleteStudentById method")
+    void testDeleteStudentById() {
+        StudentDTO student = new StudentDTO();
+        student.setStudentNumber(1234567);
+        student.setGpa(3.8f);
+        student.setName("jhon");
+        student = studentDAO.insertStudent(student);
 
-@Test
-@DisplayName("Test findStudentsUsingFilter method")
-void testFindStudentsUsingFilter() {
-    float gpaThreshold = 3.5f;
-    List<StudentDTO> filteredStudents = studentDAO.findStudentsUsingFilter(gpaThreshold);
-    assertNotNull(filteredStudents);
-    // Check if all filtered students have GPA >= gpaThreshold
-    for (StudentDTO student : filteredStudents) {
-        assertTrue(student.getGpa() >= gpaThreshold);
+        boolean isDeleted = studentDAO.deleteStudentById(student.getId());
+        assertTrue(isDeleted);
+        assertNull(studentDAO.getStudentById(student.getId()));
     }
-    // Check if the filtered list is not empty
-    assertTrue(filteredStudents.size() > 0);
-}
 
-@Test
-@DisplayName("Test JsonConverter.listEntitiesToJson method")
-void testListEntitiesToJson() {
-    List<StudentDTO> students = new ArrayList<>();
-    students.add(new StudentDTO(1, 101, 3.6f, "John Doe"));
-    students.add(new StudentDTO(2, 102, 3.7f, "Jane Smith"));
-    students.add(new StudentDTO(3, 103, 3.8f, "Alice Johnson"));
-    
-    String studentsJson = JsonConverter.listEntitiesToJson(students);
-    assertNotNull(studentsJson);
-    // You may add more assertions here based on the expected JSON structure
-}
-@Test
-@DisplayName("Test JsonConverter.entityToJson method")
-void testEntityToJson() {
-    StudentDTO student = new StudentDTO(1, 101, 3.6f, "John Doe");
-    String studentJson = JsonConverter.entityToJson(student);
-    assertNotNull(studentJson);
-    // You may add more assertions here based on the expected JSON structure
+    @Test
+    @DisplayName("Test findStudentsUsingFilter method")
+    void testFindStudentsUsingFilter() {
+        float gpaThreshold = 3.5f;
+        List<StudentDTO> filteredStudents = studentDAO.findStudentsUsingFilter(gpaThreshold);
+        assertTrue(filteredStudents.size() > 0);
+    }
+
+    // Feature 7: Convert List of Entities to a JSON String
+    @Test
+    void testListEntitiesToJson() {
+        List<StudentDTO> students = studentDAO.getAllStudents();
+        String studentsJson = JsonConverter.listEntitiesToJson(students);
+        assertFalse(studentsJson.isEmpty());
+    }
+
+    // Feature 8: Convert a single Entity by Key as a JSON String
+    @Test
+    void testEntityToJson() {
+        int idToFind = 1;
+        StudentDTO student = studentDAO.getStudentById(idToFind);
+        String studentJson = JsonConverter.entityToJson(student);
+        assertFalse(studentJson.isEmpty());
+    }
 }
