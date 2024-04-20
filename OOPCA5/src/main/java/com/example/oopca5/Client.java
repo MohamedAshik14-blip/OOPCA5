@@ -22,7 +22,9 @@ public class Client {
                 System.out.println("2. Display all Entities");
                 System.out.println("3. Add an Entity");
                 System.out.println("4. delete an Entity by ID");
-               System.out.println("5. Exit");
+                 System.out.println("5. Get Images List");
+                  System.out.println("6. Exit");
+        
                 System.out.print("Enter your choice: ");
                 int choice = scanner.nextInt();
 
@@ -43,9 +45,8 @@ public class Client {
                         case 5:
                         getImagesList(out, in);
                         break;
-                    case 6:
-
-                        System.out.println("Exiting...");
+                     case 6:
+                        exitClient(out);
                         return;
                     default:
                         System.out.println("Invalid choice. Please try again.");
@@ -147,5 +148,11 @@ public class Client {
         try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(fileName))) {
             bos.write(fileData);
         }
+    }
+    private static void exitClient(ObjectOutputStream out) throws IOException {
+
+        out.writeInt(-6);
+        out.flush();
+        System.out.println("Exiting...");
     }
 }
