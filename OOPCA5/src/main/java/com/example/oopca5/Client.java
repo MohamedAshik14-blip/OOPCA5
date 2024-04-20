@@ -142,5 +142,10 @@ public class Client {
             System.out.println("Image file '" + fileName + "' not found on the server.");
         }
     }
-  
+    
+     private static void saveImageFile(String fileName, byte[] fileData) throws IOException {
+        try (BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(fileName))) {
+            bos.write(fileData);
+        }
+    }
 }
